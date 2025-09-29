@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  plantme-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Optional: Add your FastAPI backend service here
+  # plantme-backend:
+  #   image: your-fastapi-backend:latest
+  #   ports:
+  #     - "8000:8000"
+  #   environment:
+  #     - ENV=production
+  #   restart: unless-stopped
